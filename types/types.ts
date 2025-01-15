@@ -33,6 +33,12 @@ export type FetchParams = {
   searchType?: string;
 };
 
+export interface SearchParams {
+  query?: string;
+  page?: string;
+  searchType?: string;
+}
+
 export interface ProductListProps {
   query: string;
   currentPage: number;
@@ -70,4 +76,8 @@ export interface ProductCardProps {
   brand: string;
   category: string;
   imageUrl?: string;
+}
+
+export interface ProductDetail{
+  sku: string;
 }

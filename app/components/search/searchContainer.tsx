@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Search from "@/app/components/search/search";
 import { SearchContainerProps } from "@/types/types";
-import { LoadingComponent } from "../loader/page";
+import { LoadingSpinner } from "../LoadingSpinner";
 
 export default function SearchContainer({ children }: SearchContainerProps) {
   const [isSearching, setIsSearching] = useState(false);
@@ -23,7 +23,7 @@ export default function SearchContainer({ children }: SearchContainerProps) {
 
       {isSearching ? (
         <div className="flex justify-center items-center h-64 bg-ye">
-          <LoadingComponent />
+          <LoadingSpinner />
         </div>
       ) : (
         children

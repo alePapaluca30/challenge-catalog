@@ -1,12 +1,14 @@
-import ProductDetailCard from "@/app/components/productDetail/productDetail";
+import ProductDetailCard from "@/app/components/Product/productDetail";
 import { getProductBySku } from "@/lib/getProductBySku";
+import { ProductDetail } from "@/types/types";
 
 export default async function ProductPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<ProductDetail>;
 }) {
-  const result = await getProductBySku(params.id);
+  const { sku } = await params;
+  const result = await getProductBySku(sku);
 
   if (typeof result === "string") {
     return (

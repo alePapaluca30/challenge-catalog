@@ -1,6 +1,6 @@
 import { Product, ProductListProps } from "@/types/types";
-import ProductCard from "../productCard/page";
 import { getProducts } from "@/lib/getProducts";
+import ProductCard from "./productCard";
 
 export default async function ProductList({
   query,

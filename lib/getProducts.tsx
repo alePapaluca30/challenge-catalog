@@ -1,11 +1,11 @@
-import { FetchParams, ProductListProps } from "@/types/types";
+import { FetchParams, Product } from "@/types/types";
 
 export async function getProducts({
   search = "",
   searchType = "sku",
   page = 1,
   size = 10,
-}: FetchParams): Promise<ProductListProps> {
+}: FetchParams): Promise<Product[]> {
   const query = new URLSearchParams();
 
   if (search) {
