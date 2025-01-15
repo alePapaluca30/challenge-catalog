@@ -1,0 +1,20 @@
+import { Product } from "@/types/types";
+
+export async function getProductBySku(sku: string): Promise<Product | string> {
+  try {
+    const res = await fetch(`http://localhost:3001/products?sku=${sku}`);
+
+    if (res.status === 404) return "No encontrado";
+    if (res.status === 500) return "No se pudo cargar";
+
+    if (!res.ok) throw new Error("Error inesperado al obtener el producto");
+
+    const [product]: Product[] = await res.json();
+
+    if (!product) return "No encontrado";
+
+    return product;
+  } catch (error) {
+    return "No se pudo cargar";
+  }
+}
