@@ -1,5 +1,10 @@
 import { FetchParams, Product } from "@/types/types";
 
+const API_BASE_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://challenge-back-catalog-1.onrender.com'
+    : 'http://localhost:3000';
+
 export async function getProducts({
   search = "",
   searchType = "sku",
@@ -18,7 +23,7 @@ export async function getProducts({
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
   const res = await fetch(
-    `http://localhost:3001/products?${query.toString()}`,
+    `${API_BASE_URL}/products?${query.toString()}`,
     {
       cache: "no-store",
     }
