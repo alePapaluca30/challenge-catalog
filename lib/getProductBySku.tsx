@@ -15,6 +15,8 @@ export async function getProductBySku(sku: string): Promise<Product | string> {
 
     return product;
   } catch (error) {
+    console.log(error);
+    
     return "No se pudo cargar";
   }
 }
