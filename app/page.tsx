@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import ProductList from "./components/productList/page";
-import { Loader } from "./components/loader/page";
+import { LoadingComponent } from "./components/loader/page";
 import SearchContainer from "./components/search/searchContainer";
 import { ProductListProps } from "@/types/types";
 
@@ -16,7 +16,7 @@ export default function Page({
   return (
     <div className="container mx-auto">
       <SearchContainer>
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<LoadingComponent />}>
           <ProductList
             query={query}
             searchType={searchType}
