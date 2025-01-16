@@ -3,7 +3,7 @@ import { FetchParams, Product } from "@/types/types";
 const API_BASE_URL =
   process.env.NODE_ENV === 'production'
     ? 'https://challenge-back-catalog-1.onrender.com'
-    : 'http://localhost:3000';
+    : 'http://localhost:3001';
 
 export async function getProducts({
   search = "",

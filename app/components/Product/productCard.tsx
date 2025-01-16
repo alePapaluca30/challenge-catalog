@@ -20,8 +20,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <Image
           src={imageUrl}
           alt={name}
-          width={100}
-          height={100}
+          width={120}
+          height={120}
           className="w-full h-48 object-cover rounded-md"
         />
       ) : (
@@ -31,19 +31,25 @@ const ProductCard: React.FC<ProductCardProps> = ({
       )}
       <div className="flex flex-col justify-center space-y-2">
         <div className="flex justify-between pt-2">
-          <Badge style={{ backgroundColor: "#3b82f6" }}>{category}</Badge>
-          <Badge style={{ backgroundColor: "#3b82f6" }}>{brand}</Badge>
+          <Badge variant="secondary">{category}</Badge>
         </div>
-        <h3 className="text-xl font-semibold">{name}</h3>
-        <div className="flex flex-row justify-between items-end">
+        <div className="flex flex-col">
+          <h3 className="text-xl font-semibold capitalize">{name}</h3>
+          <div className="flex gap-1 subpixel-antialiased tracking-wide">
+            <span className="text-gray-500">Marca:</span>
+            <span className="text-gray-500">{brand}</span>
+          </div>
+        </div>
+
+        <div className="flex flex-row justify-between items-end pt-2">
           <Link
             href={`/products/${sku}`}
             passHref
-            className="hover:underline hover:text-blue-500"
+            className="hover:underline hover:text-primary font-semibold"
           >
             Ver detalle
           </Link>
-          <p className="text-gray-900 font-bold text-xl">${price.toFixed(2)}</p>
+          <p className="text-gray-700 font-bold text-xl">${price.toFixed(2)}</p>
         </div>
       </div>
     </div>

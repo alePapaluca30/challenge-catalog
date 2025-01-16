@@ -13,13 +13,13 @@ export default async function ProductPage({
   if (typeof result === "string") {
     return (
       <main className="container mx-auto py-8 px-4">
-        <h1 className="text-3xl font-bold mb-8 text-center">{result}</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center">{result}</h1>d
       </main>
     );
   }
 
   return (
-    <main className="container mx-auto py-8 px-4">
+    <main className="container mx-auto py-8 px-4 justify-center items-center">
       <h1 className="text-3xl font-bold mb-8 text-center">
         Detalle del Producto
       </h1>

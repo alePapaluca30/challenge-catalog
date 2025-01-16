@@ -31,7 +31,7 @@ export default async function ProductList({
           price={product.price}
           brand={product.brand}
           category={product.category.name}
-          // imageUrl={product.image}
+          imageUrl={product.image}
         />
       ))}
     </div>

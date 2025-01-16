@@ -80,7 +80,6 @@ export default function Search({ onSearchStart, onSearchEnd }: SearchProps) {
       <div className="flex-1 relative">
         <div className="flex">
           <Input
-            className="w-full rounded-md border border-gray-200 placeholder:text-gray-500"
             placeholder={placeholderInput}
             onChange={(e) => {
               setInputValue(e.target.value);
