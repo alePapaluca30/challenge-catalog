@@ -39,7 +39,7 @@ export default function Search({ onSearchStart, onSearchEnd }: SearchProps) {
     updateSearchParams("", value);
   };
 
-  const updateSearchParams = (term: string, type: string) => {
+  const updateSearchParams = (term: string, type: string, clear?: boolean) => {
     const params = new URLSearchParams(searchParams);
     if (term) {
       params.set("query", term);
@@ -49,7 +49,7 @@ export default function Search({ onSearchStart, onSearchEnd }: SearchProps) {
       params.set("searchType", type);
     }
     params.set("page", "1");
-    router.push(`${pathname}?${params.toString()}`);
+    router.push(`${pathname}?${clear ? '' : params.toString()}`);
   };
 
   const placeholderInput = `Buscar por ${
@@ -92,7 +92,7 @@ export default function Search({ onSearchStart, onSearchEnd }: SearchProps) {
             variant="ghost"
             onClick={() => {
               setInputValue("");
-              updateSearchParams("", searchType);
+              updateSearchParams("", searchType, true);
             }}
           >
             Limpiar campo

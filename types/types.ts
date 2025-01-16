@@ -41,9 +41,10 @@ export interface SearchParams {
 
 export interface ProductListProps {
   query: string;
-  currentPage: number;
-  searchType?: string;
-  page?: string;
+  searchType: string;
+  initialData: Product[];
+  isSearchMode: boolean;
+  totalItems: number
 }
 
 //Detail product
@@ -78,6 +79,41 @@ export interface ProductCardProps {
   imageUrl?: string;
 }
 
-export interface ProductDetail{
+export interface ProductDetail {
   sku: string;
+}
+
+export interface GetProductsParams {
+  search?: string;
+  searchType?: string;
+  page?: number;
+  size?: number;
+}
+
+export interface ApiResponse {
+  data: Product[];
+  items: number;
+}
+
+//Hook Pagination aans scroll
+export interface UseInfiniteProductsProps {
+  query: string;
+  searchType: string;
+  initialData: Product[];
+  totalItems: number
+}
+export interface UseInfiniteScrollProps {
+  fetchNextPage: () => void;
+  hasNextPage: boolean | undefined;
+  isSearchMode: boolean;
+}
+export interface ProductGridProps {
+  products: Product[];
+}
+
+export interface ProductListStatusProps {
+  isFetchingNextPage: boolean;
+  isSearchMode: boolean;
+  hasNextPage: boolean | undefined;
+  totalProducts: number;
 }

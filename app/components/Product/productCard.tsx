@@ -16,6 +16,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   return (
     <div className="border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow">
+      {sku}
       {imageUrl ? (
         <Image
           src={imageUrl}
@@ -49,7 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           >
             Ver detalle
           </Link>
-          <p className="text-gray-700 font-bold text-xl">${price.toFixed(2)}</p>
+          <p className="text-gray-700 font-bold text-xl">${price?.toFixed(2)}</p>
         </div>
       </div>
     </div>

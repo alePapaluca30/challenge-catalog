@@ -1,20 +1,32 @@
-import { Product, ProductListProps } from "@/types/types";
-import { getProducts } from "@/lib/getProducts";
-import ProductCard from "./productCard";
+"use client";
 
-export default async function ProductList({
+import {  ProductListProps } from "@/types/types";
+import { LoadingSpinner } from "../loadingSpinner";
+import { useInfiniteProducts } from "@/hook/useInfiniteProducts";
+import { useInfiniteScroll } from "@/hook/useInfiniteScroll";
+import { ProductListStatus } from "./productListStatus";
+import { ProductGrid } from "./productGrid";
+
+export default function ProductList({
   query,
   searchType,
-  currentPage,
+  initialData,
+  isSearchMode,
+  totalItems
 }: ProductListProps) {
-  const data = await getProducts({
-    search: query,
-    searchType,
-    page: currentPage,
-    size: 10,
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
+    useInfiniteProducts({ query, searchType, initialData, totalItems });
 
-  if (data.length === 0)
+  const { ref } = useInfiniteScroll({ fetchNextPage, hasNextPage, isSearchMode });
+
+  const allProducts = data
+    ? data.pages.flatMap((page) => page.products)
+    : initialData;
+  const totalProducts = data?.pages[0]?.total || 0;
+
+  if (status === "error") return <p>Error al cargar los productos</p>;
+
+  if (allProducts.length === 0)
     return (
       <p className="text-center text-gray-500 mt-8">
         No se encontraron productos.
@@ -22,18 +34,18 @@ export default async function ProductList({
     );
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-      {data.map((product: Product) => (
-        <ProductCard
-          key={product.sku}
-          sku={product.sku}
-          name={product.name}
-          price={product.price}
-          brand={product.brand}
-          category={product.category.name}
-          imageUrl={product.image}
+    <>
+      <ProductGrid products={allProducts} />
+      <div ref={ref}>
+        <ProductListStatus
+          isFetchingNextPage={isFetchingNextPage}
+          isSearchMode={isSearchMode}
+          hasNextPage={hasNextPage}
+          totalProducts={totalProducts}
         />
-      ))}
-    </div>
+      </div>
+      {isFetchingNextPage && <LoadingSpinner />}
+    </>
   );
 }
+
