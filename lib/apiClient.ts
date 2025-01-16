@@ -77,11 +77,11 @@ export async function getProducts({
   size?: number;
 }): Promise<{ products: Product[]; total: number }> {
   const params: QueryParams = {
-    q: search,
-    "category.name": searchType,
     _page: page,
     _per_page: size,
   };
+
+  if (search) params[searchType] = search;
 
   try {
     const responseData = await apiRequest<{
@@ -94,7 +94,6 @@ export async function getProducts({
       total: responseData.items,
     };
   } catch (error) {
-    console.error("Error in getProducts:", error);
     throw error;
   }
 }
@@ -104,4 +103,3 @@ const apiClient = {
 };
 
 export default apiClient;
-

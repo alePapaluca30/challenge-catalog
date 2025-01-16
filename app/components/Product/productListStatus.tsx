@@ -1,6 +1,11 @@
 import { ProductListStatusProps } from "@/types/types";
 
-export function ProductListStatus({ isFetchingNextPage, isSearchMode, hasNextPage, totalProducts }: ProductListStatusProps) {
+export function ProductListStatus({
+  isFetchingNextPage,
+  isSearchMode,
+  hasNextPage,
+  totalProducts,
+}: ProductListStatusProps) {
   if (!isSearchMode && hasNextPage) {
     return (
       <div className="h-10 mt-4">
@@ -16,13 +21,10 @@ export function ProductListStatus({ isFetchingNextPage, isSearchMode, hasNextPag
   if ((isSearchMode || !hasNextPage) && totalProducts > 0) {
     return (
       <p className="text-center text-gray-500 mt-4">
-        {isSearchMode
-          ? `Se encontraron ${totalProducts} productos.`
-          : `Has visto todos los productos (${totalProducts} en total).`}
+        {isSearchMode && `Se encontraron ${totalProducts} productos.`}
       </p>
     );
   }
 
   return null;
 }
-

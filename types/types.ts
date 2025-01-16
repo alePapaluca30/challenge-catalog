@@ -44,6 +44,7 @@ export interface ProductListProps {
   searchType: string;
   initialData: Product[];
   isSearchMode: boolean;
+  totalItems: number
 }
 
 //Detail product
@@ -99,6 +100,7 @@ export interface UseInfiniteProductsProps {
   query: string;
   searchType: string;
   initialData: Product[];
+  totalItems: number
 }
 export interface UseInfiniteScrollProps {
   fetchNextPage: () => void;

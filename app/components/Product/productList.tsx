@@ -12,9 +12,10 @@ export default function ProductList({
   searchType,
   initialData,
   isSearchMode,
+  totalItems
 }: ProductListProps) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
-    useInfiniteProducts({ query, searchType, initialData });
+    useInfiniteProducts({ query, searchType, initialData, totalItems });
 
   const { ref } = useInfiniteScroll({ fetchNextPage, hasNextPage, isSearchMode });
 
