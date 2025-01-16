@@ -1,8 +1,10 @@
-import { Suspense } from "react";
-import SearchContainer from "./components/search/searchContainer";
-import { LoadingSpinner } from "./components/LoadingSpinner";
+import { getProducts } from "@/lib/getProducts";
 import ProductList from "./components/Product/productList";
+import SearchContainer from "./components/Search/searchContainer";
+import { Suspense } from "react";
+import { LoadingSpinner } from "./components/loadingSpinner";
 import { SearchParams } from "@/types/types";
+
 
 export default async function Page({
   searchParams,
@@ -10,10 +12,17 @@ export default async function Page({
   searchParams: Promise<SearchParams>;
 }) {
   const params = await searchParams;
+  
+  const query = (params.query as string) || "";
+  const searchType = (params.searchType as string) || "";
 
-  const query = params.query || "";
-  const currentPage = Number(params.page) || 1;
-  const searchType = params.searchType || "sku";
+  const { products } = await getProducts({
+    search: query,
+    searchType,
+    page: 1,
+  });
+
+  const isSearchMode = !!query || !!searchType;
 
   return (
     <div className="container mx-auto">
@@ -22,11 +31,11 @@ export default async function Page({
           <ProductList
             query={query}
             searchType={searchType}
-            currentPage={currentPage}
+            initialData={products}
+            isSearchMode={isSearchMode}
           />
         </Suspense>
       </SearchContainer>
     </div>
   );
 }
-

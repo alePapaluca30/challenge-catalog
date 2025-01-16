@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Search from "@/app/components/search/search";
+import Search from "@/app/components/Search/search";
 import { SearchContainerProps } from "@/types/types";
-import { LoadingSpinner } from "../LoadingSpinner";
+import { LoadingSpinner } from "../loadingSpinner";
 
 export default function SearchContainer({ children }: SearchContainerProps) {
   const [isSearching, setIsSearching] = useState(false);
