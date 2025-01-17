@@ -1,8 +1,10 @@
+import { LoadingSpinner } from "@/app/components/loadingSpinner";
 import ProductDetailCard from "@/app/components/Product/productDetail";
 import { getProductBySku } from "@/lib/getProductBySku";
 import { ProductDetail } from "@/types/types";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default async function ProductPage({
   params,
@@ -27,9 +29,12 @@ export default async function ProductPage({
       ) : (
         <>
           <h1 className="text-3xl font-bold mb-8 pl-5 text-center">
-            Detalle del Producto
+            Detalle del producto
           </h1>
-          <ProductDetailCard product={result} />
+
+          <Suspense fallback={<LoadingSpinner />}>
+            <ProductDetailCard product={result} />
+          </Suspense>
         </>
       )}
     </main>

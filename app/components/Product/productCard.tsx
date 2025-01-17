@@ -42,11 +42,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <Link
             href={`/products/${sku}`}
             passHref
-            className="hover:underline hover:text-primary "
+            className="hover:underline hover:text-primary"
           >
             Ver detalle
           </Link>
-          <p className="text-gray-700 font-bold text-xl">
+          <p className="font-bold text-xl">
             ${price?.toFixed(2)}
           </p>
         </div>

@@ -1,9 +1,11 @@
 "use client";
 
-import { Card, CardContent, CardHeader } from "../../../components/ui/card";
-import { Badge } from "../../../components/ui/badge";
+import { useState } from "react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { ProductDetailCardProps } from "@/types/types";
 import Image from "next/image";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const getColor = (color: string) => {
   switch (color.toLowerCase()) {
@@ -21,101 +23,78 @@ const getColor = (color: string) => {
       return "hsl(0, 0%, 80%)";
   }
 };
+
 export default function ProductDetailCard({ product }: ProductDetailCardProps) {
+  const [imageLoading, setImageLoading] = useState(true);
+
   return (
     <div className="flex flex-col justify-center items-center w-full">
-      <Card className="flex flex-col md:flex-row justify-center items-center w-full h-full">
-        <div className="relative w-full h-full">
+      <Card className="flex flex-col md:flex-row justify-center items-center w-full h-full p-6">
+        <div className="relative w-full md:w-1/2 h-72 md:h-96 rounded-xl overflow-hidden">
+          {imageLoading && (
+            <Skeleton className="absolute inset-0 h-full w-full bg-gray-100" />
+          )}
           {product.image ? (
             <Image
               src={product.image}
               alt={product.name}
-              width={120}
-              height={160}
-              className="w-full h-72 object-contain rounded-md"
+              fill
+              className={`object-contain transition-opacity duration-300 ${
+                imageLoading ? "opacity-0" : "opacity-100"
+              }`}
+              onLoad={() => setImageLoading(false)}
             />
           ) : (
-            <div className="w-full h-48 bg-gray-200 flex items-center justify-center rounded-md">
-              <span className="text-gray-500">Sin imagen</span>
+            <div className="absolute inset-0 bg-muted flex items-center justify-center">
+              <span className="text-muted-foreground">Sin imagen</span>
             </div>
           )}
         </div>
-        <div className="flex w-full flex-col">
+        <div className="flex w-full md:w-1/2 flex-col">
           <CardHeader>
-            <div className="flex justify-between pt-2">
-              <Badge>{product.category.name}</Badge>
-              <Badge variant={"outline"}>{product.brand}</Badge>
+            <div className="flex justify-between">
+              <Badge variant="secondary">{product.category.name}</Badge>
+              <Badge variant="outline">{product.brand}</Badge>
             </div>
-            <h3 className="text-xl font-semibold">{product.name}</h3>
-            <span className="text-sm text-muted-foreground">
-              SKU: {product.sku}
+            <h3 className="text-2xl font-semibold">{product.name}</h3>
+            <span className="text-muted-foreground uppercase text-base font-semibold">
+              {product.sku}
             </span>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex flex-col justify-center space-y-4">
-              <p className="text-muted-foreground">{product.description}</p>
-
-              <ul className="space-y-1">
-                {product.specifications.map((spec) => {
-                  if (spec.name === "Color") {
-                    const color = getColor(spec.value);
-                    return (
-                      <li key={spec.name} className="flex items-center">
-                        <span className="font-semibold mr-2 text-gray-700">
-                          {spec.name}
-                        </span>
-
-                        <div
-                          className="w-8 h-8 rounded-full border-2 p-2"
-                          style={{ backgroundColor: color, padding: "2" }}
-                        ></div>
-                      </li>
-                    );
-                  }
-
-                  if (spec.name === "Tamaño") {
-                    return (
-                      <li key={spec.name} className="flex items-center">
-                        <span className="font-semibold mr-2 text-gray-700">
-                          {spec.name}
-                        </span>
-                        <div className="mt-2 flex gap-2">
-                          {spec.value.split(",").map((size, index) => (
-                            <span
-                              key={index}
-                              className="px-3 py-1 bg-gray-200 text-sm rounded-full"
-                            >
-                              {size.trim()}
-                            </span>
-                          ))}
-                        </div>
-                      </li>
-                    );
-                  }
-
-                  return (
-                    <li key={spec.name}>
-                      <span className="font-medium">{spec.name}:</span>
-                      {spec.value}
-                    </li>
-                  );
-                })}
-              </ul>
-
-              <div className="flex flex-row justify-between">
-                <Badge
-                  variant={product.stock > 0 ? "secondary" : "destructive"}
-                >
-                  {product.stock === 1
-                    ? "Última unidad!"
-                    : product.stock > 0
-                    ? `Quedan ${product.stock} unidades`
-                    : "Agotado"}
-                </Badge>
-                <p className="text-gray-900 font-bold text-2xl">
-                  ${product.price.toFixed(2)}
-                </p>
-              </div>
+            <p className="text-muted-foreground">{product.description}</p>
+            <ul className="space-y-2">
+              {product.specifications.map((spec) => (
+                <li key={spec.name} className="flex items-center">
+                  <span className="font-medium mr-2">{spec.name}:</span>
+                  {spec.name === "Color" ? (
+                    <div
+                      className="w-6 h-6 rounded-full border"
+                      style={{ backgroundColor: getColor(spec.value) }}
+                    />
+                  ) : spec.name === "Tamaño" ? (
+                    <div className="flex gap-2">
+                      {spec.value.split(",").map((size, index) => (
+                        <Badge key={index} variant="outline">
+                          {size.trim()}
+                        </Badge>
+                      ))}
+                    </div>
+                  ) : (
+                    <span>{spec.value}</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <div className="flex justify-between items-center">
+              <Badge variant={product.stock > 0 ? "default" : "destructive"}>
+                {product.stock === 1
+                  ? "¡Última unidad!"
+                  : product.stock > 0
+                  ? `Quedan ${product.stock} unidades`
+                  : "Agotado"}
+              </Badge>
+              <p className="text-3xl font-bold">${product.price.toFixed(2)}</p>
             </div>
           </CardContent>
         </div>
@@ -123,3 +102,4 @@ export default function ProductDetailCard({ product }: ProductDetailCardProps) {
     </div>
   );
 }
+
