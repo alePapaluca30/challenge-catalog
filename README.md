@@ -70,12 +70,12 @@ El backend de esta aplicación está alojado en un repositorio separado y desple
 
 Para más detalles sobre el backend, por favor consulta el README en el repositorio correspondiente.
 
-[https://github.com/alePapaluca30/challenge-back-catalog](reposuarios/challenge-back-catalog)
+[https://github.com/alePapaluca30/challenge-catalog](reposuarios/challenge-back-catalog)
 
 
 ## Despliegue
 
-La aplicación frontend está desplegada en Vercel y se puede acceder en: [https://challenge-catalog-n8v96v28u-alejandras-projects-def16140.vercel.app/]
+La aplicación frontend está desplegada en Vercel y se puede acceder en: [https://challenge-catalog-dpjb7m7ia-alejandras-projects-def16140.vercel.app/]
 
 ## Consideraciones Adicionales
 
