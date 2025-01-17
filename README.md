@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Catálogo de Productos - Desafío Frontend Senior (Web)
 
-## Getting Started
+## Descripción del Proyecto
 
-First, run the development server:
+Este proyecto es una aplicación web de catálogo de productos desarrollada como parte de un desafío técnico para la posición de Frontend Senior. La aplicación permite a los usuarios buscar productos, ver un listado de resultados, y acceder a detalles específicos de cada producto.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tecnologías Utilizadas
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Next.js](https://nextjs.org/) (con App Router)
+- [TypeScript](https://www.typescriptlang.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Shadcn/ui](https://ui.shadcn.com/) (librería de componentes UI)
+- [React Query](https://tanstack.com/query/latest) (para manejo de estado y paginación)
+- [JSON Server](https://github.com/typicode/json-server) (para simular la API de productos en desarrollo local)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Características Implementadas
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Página de Listado de Productos (PLP)
 
-## Learn More
+- Ruta: `/`
+- Búsqueda de productos por SKU o nombre con debounce de 500ms
+- Loader durante la búsqueda
+- Visualización de información básica del producto (SKU, categoría, marca, precio)
+- Botón "Ver Detalle" para cada producto
+- Paginación con scroll infinito manteniendo los valores iniciales del SSR
 
-To learn more about Next.js, take a look at the following resources:
+### Página de Detalle de Producto (PDP)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Ruta: `/products/:sku`
+- Loader durante la carga de información
+- Visualización detallada del producto:
+  - Nombre
+  - Código SKU
+  - Foto principal
+  - Categoría
+  - Marca
+  - Precio
+  - Especificaciones
+- Manejo de errores:
+  - Mensaje "No encontrado" para error 404
+  - Mensaje "No se pudo cargar" para error 500
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Instalación y Uso
 
-## Deploy on Vercel
+1. Clonar el repositorio:
+   ```
+   git clone https://github.com/alePapaluca30/challenge-catalog.git
+   cd challenge-catalog
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. Instalar dependencias:
+   ```
+   npm install
+   ```
+
+3. Iniciar el servidor de desarrollo y el mock de la API:
+   ```
+   npm run dev
+   ```
+   Este comando iniciará tanto el servidor de desarrollo de Next.js como el JSON Server para simular la API.
+
+5. Abrir [http://localhost:3000](http://localhost:3000) en el navegador para ver la aplicación.
+
+## Backend
+
+El backend de esta aplicación está alojado en un repositorio separado y desplegado en Render. La URL del backend en producción es:
+
+[https://challenge-back-catalog.onrender.com](https://challenge-back-catalog.onrender.com)
+
+Para más detalles sobre el backend, por favor consulta el README en el repositorio correspondiente.
+
+[https://github.com/alePapaluca30/challenge-back-catalog](reposuarios/challenge-back-catalog)
+
+
+## Despliegue
+
+La aplicación frontend está desplegada en Vercel y se puede acceder en: [https://challenge-catalog-n8v96v28u-alejandras-projects-def16140.vercel.app/]
+
+## Consideraciones Adicionales
+
+- La aplicación utiliza Server-Side Rendering (SSR) para la carga inicial de datos, mejorando el SEO y el rendimiento.
+- Se implementó un manejo robusto de errores tanto en el cliente como en el servidor.
+- La interfaz es totalmente responsiva, adaptándose a diferentes tamaños de pantalla.
+- En desarrollo local, se utiliza JSON Server para simular la API, mientras que en producción se conecta al backend real alojado en Render.
+
+## Autor
+
+Alejandra Elizabeth Papaluca
+
+## Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para más detalles.
