@@ -1,8 +1,9 @@
 import { Product } from "@/types/types";
 
-const API_URL = process.env.NODE_ENV === 'production'
-  ? "https://challenge-back-catalog.onrender.com"
-  : "http://localhost:3001";
+const API_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://challenge-back-catalog.onrender.com"
+    : "http://localhost:3001";
 const API_TIMEOUT = Number(process.env.NEXT_PUBLIC_API_TIMEOUT) || 5000;
 const MAX_RETRIES = Number(process.env.NEXT_PUBLIC_API_MAX_RETRIES) || 3;
 
@@ -99,15 +100,41 @@ export async function getProducts({
   }
 }
 
+// export async function getProductBySku(sku: string): Promise<Product | string> {
+//   const params: QueryParams = { sku };
+
+//   try {
+//     const responseData = await apiRequest<{ data: Product[] }>("/products", params);
+
+//     if (!responseData.data || responseData.data.length === 0) return "No encontrado";
+
+//     return responseData.data[0];
+//   } catch (error) {
+//     console.error("Error in getProductBySku:", error);
+//     return "No se pudo cargar";
+//   }
+// }
+
 export async function getProductBySku(sku: string): Promise<Product | string> {
   const params: QueryParams = { sku };
 
   try {
-    const responseData = await apiRequest<Product[]>("/products", params);
+    const responseData = await apiRequest<
+      | {
+          data?: Product[];
+        }
+      | Product[]
+    >("/products", params);
 
-    if (responseData.length === 0) return "No encontrado";
-
-    return responseData[0];
+    if (Array.isArray(responseData)) {
+      // Caso de desarrollo local
+      return responseData[0] || "No encontrado";
+    } else {
+      // Caso de producción
+      if (!responseData.data || responseData.data.length === 0)
+        return "No encontrado";
+      return responseData.data[0];
+    }
   } catch (error) {
     console.error("Error in getProductBySku:", error);
     return "No se pudo cargar";
@@ -116,7 +143,7 @@ export async function getProductBySku(sku: string): Promise<Product | string> {
 
 const apiClient = {
   getProducts,
-  getProductBySku
+  getProductBySku,
 };
 
 export default apiClient;
