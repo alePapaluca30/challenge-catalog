@@ -12,14 +12,6 @@ export default async function ProductPage({
   const { sku } = await params;
   const result = await getProductBySku(sku);
 
-  if (typeof result === "string") {
-    return (
-      <main className="container mx-auto py-8 px-4">
-        <h1 className="text-3xl font-bold mb-8 text-center">{result}</h1>d
-      </main>
-    );
-  }
-
   return (
     <main className="container mx-auto py-8 px-4 justify-center items-center">
       <div className="relative">
@@ -27,10 +19,19 @@ export default async function ProductPage({
           <ChevronLeft />
         </Link>
       </div>
-      <h1 className="text-3xl font-bold mb-8 pl-5 text-center">
-        Detalle del Producto
-      </h1>
-      <ProductDetailCard product={result} />
+
+      {typeof result === "string" ? (
+        <main className="container mx-auto py-8 px-4">
+          <h1 className="text-3xl font-bold mb-8 text-center">{result}</h1>
+        </main>
+      ) : (
+        <>
+          <h1 className="text-3xl font-bold mb-8 pl-5 text-center">
+            Detalle del Producto
+          </h1>
+          <ProductDetailCard product={result} />
+        </>
+      )}
     </main>
   );
 }

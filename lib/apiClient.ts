@@ -99,8 +99,24 @@ export async function getProducts({
   }
 }
 
+export async function getProductBySku(sku: string): Promise<Product | string> {
+  const params: QueryParams = { sku };
+
+  try {
+    const responseData = await apiRequest<Product[]>("/products", params);
+
+    if (responseData.length === 0) return "No encontrado";
+
+    return responseData[0];
+  } catch (error) {
+    console.error("Error in getProductBySku:", error);
+    return "No se pudo cargar";
+  }
+}
+
 const apiClient = {
   getProducts,
+  getProductBySku
 };
 
 export default apiClient;
