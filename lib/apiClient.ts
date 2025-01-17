@@ -1,6 +1,6 @@
 import { Product } from "@/types/types";
 
-const API_URL =  "https://challenge-back-catalog.onrender.com";
+const API_URL =  "http://localhost:3001";
 const API_TIMEOUT = Number(process.env.NEXT_PUBLIC_API_TIMEOUT) || 5000;
 const MAX_RETRIES = Number(process.env.NEXT_PUBLIC_API_MAX_RETRIES) || 3;
 
@@ -88,8 +88,6 @@ export async function getProducts({
       data: Product[];
       items: number;
     }>("/products", params);
-    console.log(responseData);
-
     return {
       products: responseData.data || [],
       total: responseData.items,
