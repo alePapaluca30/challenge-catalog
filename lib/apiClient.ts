@@ -27,11 +27,7 @@ async function fetchWithRetry(
 
     clearTimeout(id);
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    return response;
+    return response ?? [];
   } catch (error) {
     if (retries > 0) {
       console.warn(`Retrying fetch, attempts left: ${retries - 1}`);
